@@ -1,0 +1,17 @@
+
+Microsoft Visual Studio Solution File, Format Version 15.00
+# Visual Studio 2017
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITWEBExercise5", "ITWEBExercise5.csproj", "{66FB9E4D-5DD5-43DD-A834-5667E74D1E21}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{66FB9E4D-5DD5-43DD-A834-5667E74D1E21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66FB9E4D-5DD5-43DD-A834-5667E74D1E21}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66FB9E4D-5DD5-43DD-A834-5667E74D1E21}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66FB9E4D-5DD5-43DD-A834-5667E74D1E21}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
