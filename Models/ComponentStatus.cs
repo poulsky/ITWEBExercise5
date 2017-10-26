@@ -1,11 +1,14 @@
-public enum ComponentStatus
+namespace ITWEBExercise5.Models
 {
-    Available,
-    ReservedLoaner,
-    ReservedAdmin,
-    Loaned,
-    Defect,
-    Trashed,
-    Lost,
-    NeverReturned
+    public enum ComponentStatus
+    {
+        Available,
+        ReservedLoaner,
+        ReservedAdmin,
+        Loaned,
+        Defect,
+        Trashed,
+        Lost,
+        NeverReturned
+    }
 }
