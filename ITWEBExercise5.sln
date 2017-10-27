@@ -1,7 +1,9 @@
-
-Microsoft Visual Studio Solution File, Format Version 15.00
-# Visual Studio 2017
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITWEBExercise5", "ITWEBExercise5.csproj", "{66FB9E4D-5DD5-43DD-A834-5667E74D1E21}"
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2005
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ITWEBExercise5", "ITWEBExercise5.csproj", "{BDCD4B5A-7479-4E03-9060-8C4873118146}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,9 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{66FB9E4D-5DD5-43DD-A834-5667E74D1E21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{66FB9E4D-5DD5-43DD-A834-5667E74D1E21}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{66FB9E4D-5DD5-43DD-A834-5667E74D1E21}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{66FB9E4D-5DD5-43DD-A834-5667E74D1E21}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BDCD4B5A-7479-4E03-9060-8C4873118146}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDCD4B5A-7479-4E03-9060-8C4873118146}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDCD4B5A-7479-4E03-9060-8C4873118146}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDCD4B5A-7479-4E03-9060-8C4873118146}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {38E7DF8F-356C-44D3-97AC-EAC36361667E}
 	EndGlobalSection
 EndGlobal
