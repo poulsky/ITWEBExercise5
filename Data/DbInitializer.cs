@@ -1,6 +1,8 @@
+using System;
 using ITWEBExercise5.Models;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 
 namespace ITWEBExercise5.Data
 {
@@ -10,7 +12,10 @@ namespace ITWEBExercise5.Data
         {
             context.Database.EnsureCreated();
 
-
+            if (context.Components.Any())
+            {
+                return;
+            }
 
             var component1 = new Component{
                 ComponentNumber = 89,
@@ -26,7 +31,7 @@ namespace ITWEBExercise5.Data
                 AdminComment = "User au593874 has it",
                 UserComment = "I'm keeping it"
             };
-            var image = System.IO.File.ReadAllBytes("resistor.jpg");
+            var image = new Byte[0];//System.IO.File.ReadAllBytes("resistor.jpg");
             var esimage = new ESImage{
                 ImageData = image,
                 Thumbnail = image,
