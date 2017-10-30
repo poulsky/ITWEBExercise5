@@ -19,8 +19,6 @@
     <Folder Include="Data\Repository\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Remove="Data\Repository\IComponentRepository.cs" />
     <Compile Remove="Data\Repository\IComponentTypeId.cs" />
-    <Compile Remove="Data\Repository\ICategoryRepository.cs" />
   </ItemGroup>
 </Project>
