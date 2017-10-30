@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using ITWEBExercise5.Data.Repository;
 
 namespace ITWEBExercise5
 {
@@ -23,10 +24,14 @@ namespace ITWEBExercise5
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<EmbeddedStockContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString(
-                        "Development")));
+            services.AddTransient<IComponentRepository, ComponentRepository>();
+            services.AddTransient<IComponentTypeRepository, ComponentTypeRepository>();
+            services.AddTransient<ICategoryRepository, CategoryRepository>();
+            //services.AddDbContext<EmbeddedStockContext>(options =>
+            //    options.UseSqlServer(
+            //        Configuration.GetConnectionString(
+            //            "Development")));
+            services.AddDbContext<EmbeddedStockContext>(options => options.UseSqlite("Data Source=TestES.db"));
             services.AddMvc();
         }
 

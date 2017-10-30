@@ -11,7 +11,6 @@ namespace ITWEBExercise5.Data
             context.Database.EnsureCreated();
 
 
-
             var component1 = new Component{
                 ComponentNumber = 89,
                 SerialNo = "KL89",
@@ -26,7 +25,7 @@ namespace ITWEBExercise5.Data
                 AdminComment = "User au593874 has it",
                 UserComment = "I'm keeping it"
             };
-            var image = System.IO.File.ReadAllBytes("resistor.jpg");
+            var image = new byte[0]; //System.IO.File.ReadAllBytes("\resistor.jpg");
             var esimage = new ESImage{
                 ImageData = image,
                 Thumbnail = image,
