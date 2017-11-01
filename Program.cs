@@ -7,6 +7,9 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using ITWEBExercise5.Models;
+using ITWEBExercise5.Data;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace ITWEBExercise5
 {
@@ -14,7 +17,14 @@ namespace ITWEBExercise5
     {
         public static void Main(string[] args)
         {
-            BuildWebHost(args).Run();
+            var host = BuildWebHost(args);
+            using (var scope = host.Services.CreateScope())
+            {
+                var service = scope.ServiceProvider;
+                var context = service.GetRequiredService<EmbeddedStockContext>();
+                DbInitializer.Initializer(context);
+            }
+            host.Run();
         }
 
         public static IWebHost BuildWebHost(string[] args) =>
