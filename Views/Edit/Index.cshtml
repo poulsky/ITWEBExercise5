@@ -1,16 +1,13 @@
-﻿
+﻿@model Category
 @{
     ViewData["Title"] = "EditView";
 }
 
 <h2>EditView</h2>
 
-<div>
-    <select>
-        <option >7</option>
-        <option >2</option>
-        <option >3</option>
-    </select>
-</div>
+<select asp-items="@(new SelectList(ViewBag.AllCategories))" onchange="alert(this.value)">
+</select>
+
+@await Component.InvokeAsync("CreateType", @ViewBag.Selected)
 
 
