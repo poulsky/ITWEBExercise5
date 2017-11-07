@@ -16,11 +16,13 @@ namespace ITWEBExercise5.Controllers
         private readonly EmbeddedStockContext _context;
         public ICategoryRepository _categoryRepository;
         public IComponentTypeRepository _componentTypeRepository;
-        public ComponentTypeFormController(ICategoryRepository categoryRepository, IComponentTypeRepository componentTypeRepository, EmbeddedStockContext context)
+        public IComponentRepository _componentRepository;
+        public ComponentTypeFormController(IComponentRepository componentRepository, ICategoryRepository categoryRepository, IComponentTypeRepository componentTypeRepository, EmbeddedStockContext context)
         {
             _componentTypeRepository = componentTypeRepository;
             _categoryRepository = categoryRepository;
             _context = context;
+            _componentRepository = componentRepository;
         }
 
         // GET: ComponentTypeForm
@@ -52,6 +54,8 @@ namespace ITWEBExercise5.Controllers
         {
             var allCategories = _categoryRepository.GetAll().ToList();
             ViewBag.AllCategories = allCategories;
+            var allComponents = _componentRepository.GetAll().ToList();
+            ViewBag.AllComponents = allComponents;
             return View();
         }
 
@@ -78,6 +82,20 @@ namespace ITWEBExercise5.Controllers
                     }
                 }
 
+                var selectedComponents= formCollection["components"].ToString();
+                var splitComponents= selectedComponents.Split(",");
+                var allComponents = await _context.Components.ToListAsync();
+                foreach (var typeId in splitComponents)
+                {
+                    foreach (var comp in allComponents)
+                    {
+                        if (comp.ComponentId.ToString() == typeId)
+                        {
+                            componentType.Components.Add(comp);
+                        }
+                    }
+                }
+
                 _context.Add(componentType);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -96,6 +114,8 @@ namespace ITWEBExercise5.Controllers
             var componentType = await _context.ComponentTypes.SingleOrDefaultAsync(m => m.ComponentTypeId == id);
             var allCategories = _categoryRepository.GetAll().ToList();
             ViewBag.AllCategories = allCategories;
+            var allComponents = await _context.Components.ToListAsync();
+            ViewBag.AllComponents = allComponents;
 
             if (componentType == null)
             {
@@ -131,6 +151,20 @@ namespace ITWEBExercise5.Controllers
                             if (cat.CategoryId.ToString() == typeId)
                             {
                                 componentType.Categories.Add(cat);
+                            }
+                        }
+                    }
+
+                    var selectedComponents = formCollection["components"].ToString();
+                    var splitComponents = selectedComponents.Split(",");
+                    var allComponents = await _context.Components.ToListAsync();
+                    foreach (var typeId in splitComponents)
+                    {
+                        foreach (var comp in allComponents)
+                        {
+                            if (comp.ComponentId.ToString() == typeId)
+                            {
+                                componentType.Components.Add(comp);
                             }
                         }
                     }

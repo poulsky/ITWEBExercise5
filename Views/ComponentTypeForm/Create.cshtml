@@ -4,6 +4,14 @@
     ViewData["Title"] = "Create";
 }
 
+<style>
+    .selectSection {
+        display: block;
+        margin-left: auto;
+        margin-right: auto
+    }
+</style>
+
 <h2>Create</h2>
 
 <h4>ComponentType</h4>
@@ -57,19 +65,35 @@
                 <input asp-for="AdminComment" class="form-control" />
                 <span asp-validation-for="AdminComment" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group" style="text-align: center">
                 <section class="container row">
-                    <div class="col-md-3">
-                        <label>Valgte Kategorier</label>
-                        <select style="width: 100px" id="leftValues" name="leftValues" size="5" multiple></select>
+                    <div class="col-md-2">
+                        <label class="control-label selectSection">Valgte Kategorier</label>
+                        <select class="form-control selectSection" style="width: 100px" id="leftValues" name="leftValues" size="5" multiple></select>
                     </div>
                     <div class="col-md-1">
-                        <input type="button" id="btnLeft" value="&lt;&lt;" />
-                        <input type="button" id="btnRight" value="&gt;&gt;" />
+                        <input style="margin-top: 40px" class="form-control selectSection" type="button" id="btnLeft" value="&lt;&lt;" />
+                        <input class="form-control selectSection" type="button" id="btnRight" value="&gt;&gt;" />
                     </div>
-                    <div class="col-md-3">
-                        <label> Mulige Kategoier</label>
-                        <select style="width: 100px" id="rightValues" name="rightValues" size="5" multiple asp-items="@(new SelectList(@ViewBag.AllCategories, "CategoryId", "Name"));"></select>
+                    <div class="col-md-2">
+                        <label class="control-label selectSection"> Mulige Kategoier</label>
+                        <select class="form-control selectSection" style="width: 100px" id="rightValues" name="rightValues" size="5" multiple asp-items="@(new SelectList(@ViewBag.AllCategories, "CategoryId", "Name"));"></select>
+                    </div>
+                </section>
+            </div>
+            <div class="form-group" style="text-align: center">
+                <section class="container row">
+                    <div class="col-md-2">
+                        <label class="control-label selectSection">Valgte Komponenter</label>
+                        <select class="form-control selectSection" style="width: 100px" id="leftComponents" name="leftComponents" size="5" multiple></select>
+                    </div>
+                    <div class="col-md-1">
+                        <input style="margin-top: 40px" class="form-control selectSection" type="button" id="btnLeftComponent" value="&lt;&lt;" />
+                        <input class="form-control selectSection" type="button" id="btnRightComponent" value="&gt;&gt;" />
+                    </div>
+                    <div class="col-md-2">
+                        <label class="control-label selectSection"> Mulige Komponenter</label>
+                        <select class="form-control selectSection" style="width: 100px" id="rightComponents" name="rightComponents" size="5" multiple asp-items="@(new SelectList(@ViewBag.AllComponents, "ComponentId", "ComponentNumber"));"></select>
                     </div>
                 </section>
             </div>
@@ -97,20 +121,36 @@
         $("#rightValues").append(selectedItem);
     });
 
-    $("#rightValues").change(function () {
-        var selectedItem = $("#rightValues option:selected");
-        $("#txtRight").val(selectedItem.text());
+    $("#btnLeftComponent").click(function () {
+        var selectedItem = $("#rightComponents option:selected");
+
+        $("#leftComponents").append(selectedItem);
+    });
+
+    $("#btnRightComponent").click(function () {
+        var selectedItem = $("#leftComponents option:selected");
+        $("#rightComponents").append(selectedItem);
     });
 
     $("#submitForm").submit(function (eventObj) {
-        var arr = [];
+        var categoryArr = [];
+        var componentArray = [];
         $("#leftValues option").each(function () {
-            arr.push($(this).val());
+            categoryArr.push($(this).val());
+        });
+
+        $("#leftComponents option").each(function () {
+            componentArray.push($(this).val());
         });
 
         $('<input />').attr('type', 'hidden')
             .attr('name', "categories")
-            .attr('value', arr)
+            .attr('value', categoryArr)
+            .appendTo('#submitForm');
+
+        $('<input />').attr('type', 'hidden')
+            .attr('name', "components")
+            .attr('value', componentArray)
             .appendTo('#submitForm');
         return true;
     });
