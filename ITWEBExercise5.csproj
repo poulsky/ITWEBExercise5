@@ -1,7 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
+    <StartupObject>ITWEBExercise5.Program</StartupObject>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Controllers\NewFolder\**" />
+    <Compile Remove="Views\NewFolder\**" />
+    <Content Remove="Controllers\NewFolder\**" />
+    <Content Remove="Views\NewFolder\**" />
+    <EmbeddedResource Remove="Controllers\NewFolder\**" />
+    <EmbeddedResource Remove="Views\NewFolder\**" />
+    <None Remove="Controllers\NewFolder\**" />
+    <None Remove="Views\NewFolder\**" />
+  </ItemGroup>
   <ItemGroup>
     <Content Remove="Views\Home\About.cshtml" />
     <Content Remove="Views\Home\Contact.cshtml" />
