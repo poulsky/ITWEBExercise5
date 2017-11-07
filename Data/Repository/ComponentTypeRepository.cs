@@ -28,7 +28,7 @@ namespace ITWEBExercise5.Data.Repository
 
         public IEnumerable<ComponentType> GetAll(Expression<Func<ComponentType, bool>> predicate) => _context.ComponentTypes.Where(predicate).AsEnumerable();
 
-        public ComponentType GetById(int id) => _context.ComponentTypes.FirstOrDefault(x => x.ComponentTypeId == id);
+        public ComponentType GetById(long id) => _context.ComponentTypes.FirstOrDefault(x => x.ComponentTypeId == id);
 
         public void Remove(ComponentType component)
         {

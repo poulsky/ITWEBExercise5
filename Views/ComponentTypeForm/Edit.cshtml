@@ -1,0 +1,120 @@
+﻿@model ITWEBExercise5.Models.ComponentType
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+
+<h4>ComponentType</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" id="submitForm">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ComponentTypeId" />
+            <div class="form-group">
+                <label asp-for="ComponentName" class="control-label"></label>
+                <input asp-for="ComponentName" class="form-control" />
+                <span asp-validation-for="ComponentName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ComponentInfo" class="control-label"></label>
+                <input asp-for="ComponentInfo" class="form-control" />
+                <span asp-validation-for="ComponentInfo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Location" class="control-label"></label>
+                <input asp-for="Location" class="form-control" />
+                <span asp-validation-for="Location" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Status" class="control-label"></label>
+                <select asp-for="Status" class="form-control"></select>
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Datasheet" class="control-label"></label>
+                <input asp-for="Datasheet" class="form-control" />
+                <span asp-validation-for="Datasheet" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ImageUrl" class="control-label"></label>
+                <input asp-for="ImageUrl" class="form-control" />
+                <span asp-validation-for="ImageUrl" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Manufacturer" class="control-label"></label>
+                <input asp-for="Manufacturer" class="form-control" />
+                <span asp-validation-for="Manufacturer" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="WikiLink" class="control-label"></label>
+                <input asp-for="WikiLink" class="form-control" />
+                <span asp-validation-for="WikiLink" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AdminComment" class="control-label"></label>
+                <input asp-for="AdminComment" class="form-control" />
+                <span asp-validation-for="AdminComment" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <section class="container row">
+                    <div class="col-md-3">
+                        <label>Valgte Kategorier</label>
+                        <select style="width: 100px" id="leftValues" name="leftValues" size="5" multiple></select>
+                    </div>
+                    <div class="col-md-1">
+                        <input type="button" id="btnLeft" value="&lt;&lt;" />
+                        <input type="button" id="btnRight" value="&gt;&gt;" />
+                    </div>
+                    <div class="col-md-3">
+                        <label> Mulige Kategoier</label>
+                        <select style="width: 100px" id="rightValues" name="rightValues" size="5" multiple asp-items="@(new SelectList(@ViewBag.AllCategories, "CategoryId", "Name"));"></select>
+                    </div>
+                </section>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>            
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>
+    $("#btnLeft").click(function() {
+        var selectedItem = $("#rightValues option:selected");
+
+        $("#leftValues").append(selectedItem);
+    });
+
+    $("#btnRight").click(function () {
+        var selectedItem = $("#leftValues option:selected");
+        $("#rightValues").append(selectedItem);
+    });
+
+    $("#rightValues").change(function () {
+        var selectedItem = $("#rightValues option:selected");
+        $("#txtRight").val(selectedItem.text());
+    });
+
+    $("#submitForm").submit(function (eventObj) {
+        var arr = [];
+        $("#leftValues option").each(function () {
+            arr.push($(this).val());
+        });
+
+        $('<input />').attr('type', 'hidden')
+            .attr('name', "categories")
+            .attr('value', arr)
+            .appendTo('#submitForm');
+        return true;
+    });
+
+</script>
+

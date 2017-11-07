@@ -9,7 +9,7 @@ namespace ITWEBExercise5.Data.Repository
     {
         IEnumerable<ComponentType> GetAll();
         IEnumerable<ComponentType> GetAll(Expression<Func<ComponentType,bool>> predicate);
-        ComponentType GetById(int id);
+        ComponentType GetById(long id);
         void Add(ComponentType componentType);
         void Remove(ComponentType component);
         void Edit(ComponentType component);
