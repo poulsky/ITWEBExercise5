@@ -11,9 +11,10 @@ using System;
 namespace ITWEBExercise5.Migrations
 {
     [DbContext(typeof(EmbeddedStockContext))]
-    partial class EmbeddedStockContextModelSnapshot : ModelSnapshot
+    [Migration("20171109185001_ManyToMany")]
+    partial class ManyToMany
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,7 +43,7 @@ namespace ITWEBExercise5.Migrations
 
                     b.HasIndex("ComponentTypeId");
 
-                    b.ToTable("CategoryComponentTypes");
+                    b.ToTable("CategoryComponentType");
                 });
 
             modelBuilder.Entity("ITWEBExercise5.Models.Component", b =>

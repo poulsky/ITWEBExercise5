@@ -58,9 +58,14 @@ namespace ITWEBExercise5.Data
             {
                 Name = "Test"
             };
-            category.ComponentTypes.Add(componenttype);
 
-            context.Categories.Add(category);
+            var categoryComponentType = new CategoryComponentType
+            {
+                Category = category,
+                ComponentType = componenttype
+            };
+
+            context.CategoryComponentTypes.Add(categoryComponentType);
             context.SaveChanges();
         }
     }

@@ -13,6 +13,7 @@ namespace ITWEBExercise5.Models
         public DbSet<Component> Components { get; set; }
         public DbSet<ComponentType> ComponentTypes { get; set; }
         public DbSet<ESImage> EsImages { get; set; }
+        public DbSet<CategoryComponentType> CategoryComponentTypes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -21,9 +22,20 @@ namespace ITWEBExercise5.Models
             modelBuilder.Entity<ComponentType>().ToTable(nameof(ComponentType));
             modelBuilder.Entity<ESImage>().ToTable(nameof(ESImage));
 
-            modelBuilder.Entity<Category>().HasMany(e => e.ComponentTypes);
-            modelBuilder.Entity<ComponentType>().HasMany(e => e.Categories);
             modelBuilder.Entity<ComponentType>().HasMany(e => e.Components);
+
+            modelBuilder.Entity<CategoryComponentType>()
+                .HasKey(cc => new {cc.CategoryId, cc.ComponentTypeId});
+
+            modelBuilder.Entity<CategoryComponentType>()
+                .HasOne(cc => cc.ComponentType)
+                .WithMany(co => co.CategoryComponentTypes)
+                .HasForeignKey(cc => cc.ComponentTypeId);
+
+            modelBuilder.Entity<CategoryComponentType>()
+                .HasOne(cc => cc.Category)
+                .WithMany(co => co.CategoryComponentTypes)
+                .HasForeignKey(cc => cc.CategoryId);
         }
     }
 }

@@ -26,7 +26,7 @@
                 <section class="container row">
                     <div class="col-md-2">
                         <label class="control-label selectSection">Valgte typer</label>
-                        <select class="form-control selectSection" style="width: 100px" id="leftValues" name="leftValues" size="5" multiple></select>
+                        <select class="form-control selectSection" style="width: 100px" id="leftValues" name="leftValues" size="5" multiple asp-items="@(new SelectList(@ViewBag.TypesOfCateogry, "ComponentTypeId", "ComponentName"));"></select>
                     </div>
                     <div class="col-md-1">
                         <input style="margin-top: 40px" class="form-control selectSection" type="button" id="btnLeft" value="&lt;&lt;" />
@@ -34,7 +34,7 @@
                     </div>
                     <div class="col-md-2">
                         <label class="control-label selectSection"> Mulige typer</label>
-                        <select class="form-control selectSection" style="width: 100px" id="rightValues" name="rightValues" size="5" multiple asp-items="@(new SelectList(@ViewBag.AllTypes, "ComponentTypeId", "ComponentName"));"></select>
+                        <select class="form-control selectSection" style="width: 100px" id="rightValues" name="rightValues" size="5" multiple asp-items="@(new SelectList(@ViewBag.TypesAvailable, "ComponentTypeId", "ComponentName"));"></select>
                     </div>
                 </section>
             </div>

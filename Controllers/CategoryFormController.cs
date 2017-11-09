@@ -77,7 +77,7 @@ namespace ITWEBExercise5.Controllers
                     {
                         if (type.ComponentTypeId.ToString() == typeId)
                         {
-                            category.ComponentTypes.Add(type);
+                            _context.CategoryComponentTypes.Add(new CategoryComponentType { Category = category, ComponentType = type });
                         }
                     }
                 }
@@ -99,6 +99,17 @@ namespace ITWEBExercise5.Controllers
             var category = await _context.Categories.SingleOrDefaultAsync(m => m.CategoryId == id);
             var allTypes = _componentTypeRepository.GetAll().ToList();
             ViewBag.AllTypes = allTypes;
+
+            var typesOfCategory = await _context.CategoryComponentTypes
+                .Where(cc => cc.CategoryId == id)
+                .Select(cc => cc.ComponentType)
+                .ToListAsync();
+
+            var typesAvailable = await _context.ComponentTypes.Where(c => !typesOfCategory.Contains(c))
+                .ToListAsync();
+            ViewBag.TypesOfCateogry = typesOfCategory;
+            ViewBag.TypesAvailable = typesAvailable;
+
             if (category == null)
             {
                 return NotFound();
@@ -126,13 +137,34 @@ namespace ITWEBExercise5.Controllers
                     var splitSelected = selectedValues.Split(",");
                     var allTypes = _componentTypeRepository.GetAll().ToList();
 
+                    var typesOfCategory = await _context.CategoryComponentTypes
+                        .Where(cc => cc.CategoryId == id)
+                        .Select(cc => cc.ComponentType)
+                        .ToListAsync();
+
                     foreach (var typeId in splitSelected)
                     {
-                        foreach (var type in allTypes)
+                        var componentType = _componentTypeRepository.GetById(Int32.Parse(typeId));
+
+                        
+
+                        if (!typesOfCategory.Contains(componentType))
                         {
-                            if (type.ComponentTypeId.ToString() == typeId)
+                            _context.CategoryComponentTypes.Add(new CategoryComponentType { Category = category, ComponentType = componentType });
+                        }
+                    }
+
+                    foreach (var type in typesOfCategory)
+                    {
+                        if (!splitSelected.Contains(type.ComponentTypeId.ToString()))
+                        {
+                            var catCompType = await _context.CategoryComponentTypes
+                                .Where(cc => cc.ComponentTypeId == type.ComponentTypeId
+                                             && cc.CategoryId == id).SingleOrDefaultAsync();
+                            if (catCompType != null)
                             {
-                                category.ComponentTypes.Add(type);
+                                _context.CategoryComponentTypes.Remove(catCompType);
+                                _context.SaveChanges();
                             }
                         }
                     }

@@ -11,9 +11,10 @@ using System;
 namespace ITWEBExercise5.Migrations
 {
     [DbContext(typeof(EmbeddedStockContext))]
-    partial class EmbeddedStockContextModelSnapshot : ModelSnapshot
+    [Migration("20171109190341_ManyToManySecondTry")]
+    partial class ManyToManySecondTry
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

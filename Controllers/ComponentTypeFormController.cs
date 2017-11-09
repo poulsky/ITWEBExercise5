@@ -54,8 +54,6 @@ namespace ITWEBExercise5.Controllers
         {
             var allCategories = _categoryRepository.GetAll().ToList();
             ViewBag.AllCategories = allCategories;
-            var allComponents = _componentRepository.GetAll().ToList();
-            ViewBag.AllComponents = allComponents;
             return View();
         }
 
@@ -77,21 +75,7 @@ namespace ITWEBExercise5.Controllers
                     {
                         if (cat.CategoryId.ToString() == typeId)
                         {
-                            componentType.Categories.Add(cat);
-                        }
-                    }
-                }
-
-                var selectedComponents= formCollection["components"].ToString();
-                var splitComponents= selectedComponents.Split(",");
-                var allComponents = await _context.Components.ToListAsync();
-                foreach (var typeId in splitComponents)
-                {
-                    foreach (var comp in allComponents)
-                    {
-                        if (comp.ComponentId.ToString() == typeId)
-                        {
-                            componentType.Components.Add(comp);
+                            _context.CategoryComponentTypes.Add(new CategoryComponentType{Category = cat, ComponentType = componentType});
                         }
                     }
                 }
@@ -112,11 +96,19 @@ namespace ITWEBExercise5.Controllers
             }            
            
             var componentType = await _context.ComponentTypes.SingleOrDefaultAsync(m => m.ComponentTypeId == id);
-            var allCategories = _categoryRepository.GetAll().ToList();
-            ViewBag.AllCategories = allCategories;
-            var allComponents = await _context.Components.ToListAsync();
-            ViewBag.AllComponents = allComponents;
+            var componentsOfType = await _context.Components.Where(c => c.ComponentTypeId == id).ToListAsync();
+            ViewBag.ComponentsOfType = componentsOfType;
 
+            var categoriesOfType = await _context.CategoryComponentTypes
+                .Where(cc => cc.ComponentTypeId == id)
+                .Select(cc => cc.Category)
+                .ToListAsync();
+
+            var categoriesAvailable = await _context.Categories.Where(c => !categoriesOfType.Contains(c))
+                .ToListAsync();
+
+            ViewBag.CategoriesOfType = categoriesOfType;
+            ViewBag.CategoriesAvailable = categoriesAvailable;
             if (componentType == null)
             {
                 return NotFound();
@@ -142,29 +134,35 @@ namespace ITWEBExercise5.Controllers
                 {
                     var selectedValues = formCollection["categories"].ToString();
                     var splitSelected = selectedValues.Split(",");
-                    
-                    var allCategories = _categoryRepository.GetAll().ToList();
-                    foreach (var typeId in splitSelected)
+
+                    var categoriesOfType = await _context.CategoryComponentTypes
+                        .Where(cc => cc.ComponentTypeId == id)
+                        .Select(cc => cc.Category)
+                        .ToListAsync();
+
+                    foreach (var categoryId in splitSelected)
                     {
-                        foreach (var cat in allCategories)
+                        var category = _categoryRepository.GetById(Int32.Parse(categoryId));
+
+                        
+
+                        if (!categoriesOfType.Contains(category))
                         {
-                            if (cat.CategoryId.ToString() == typeId)
-                            {
-                                componentType.Categories.Add(cat);
-                            }
+                            _context.CategoryComponentTypes.Add(new CategoryComponentType { Category = category, ComponentType = componentType });
                         }
                     }
 
-                    var selectedComponents = formCollection["components"].ToString();
-                    var splitComponents = selectedComponents.Split(",");
-                    var allComponents = await _context.Components.ToListAsync();
-                    foreach (var typeId in splitComponents)
+                    foreach (var type in categoriesOfType)
                     {
-                        foreach (var comp in allComponents)
+                        if (!splitSelected.Contains(type.CategoryId.ToString()))
                         {
-                            if (comp.ComponentId.ToString() == typeId)
+                            var catCompType = await _context.CategoryComponentTypes
+                                .Where(cc => cc.CategoryId == type.CategoryId
+                                             && cc.ComponentTypeId == id).SingleOrDefaultAsync();
+                            if (catCompType != null)
                             {
-                                componentType.Components.Add(comp);
+                                _context.CategoryComponentTypes.Remove(catCompType);
+                                _context.SaveChanges();
                             }
                         }
                     }

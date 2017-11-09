@@ -70,7 +70,7 @@
                 <section class="container row">
                     <div class="col-md-2">
                         <label class="control-label selectSection">Valgte Kategorier</label>
-                        <select class="form-control selectSection" style="width: 100px" id="leftValues" name="leftValues" size="5" multiple></select>
+                        <select class="form-control selectSection" style="width: 100px" id="leftValues" name="leftValues" size="5" multiple asp-items="@(new SelectList(@ViewBag.CategoriesOfType, "CategoryId", "Name"));"></select>
                     </div>
                     <div class="col-md-1">
                         <input style="margin-top: 40px" class="form-control selectSection" type="button" id="btnLeft" value="&lt;&lt;" />
@@ -78,7 +78,7 @@
                     </div>
                     <div class="col-md-2">
                         <label class="control-label selectSection"> Mulige Kategoier</label>
-                        <select class="form-control selectSection" style="width: 100px" id="rightValues" name="rightValues" size="5" multiple asp-items="@(new SelectList(@ViewBag.AllCategories, "CategoryId", "Name"));"></select>
+                        <select class="form-control selectSection" style="width: 100px" id="rightValues" name="rightValues" size="5" multiple asp-items="@(new SelectList(@ViewBag.CategoriesAvailable, "CategoryId", "Name"));"></select>
                     </div>
                 </section>
             </div>
@@ -86,15 +86,7 @@
                 <section class="container row">
                     <div class="col-md-2">
                         <label class="control-label selectSection">Valgte Komponenter</label>
-                        <select class="form-control selectSection" style="width: 100px" id="leftComponents" name="leftComponents" size="5" multiple></select>
-                    </div>
-                    <div class="col-md-1">
-                        <input style="margin-top: 40px" class="form-control selectSection" type="button" id="btnLeftComponent" value="&lt;&lt;" />
-                        <input class="form-control selectSection" type="button" id="btnRightComponent" value="&gt;&gt;" />
-                    </div>
-                    <div class="col-md-2">
-                        <label class="control-label selectSection"> Mulige Komponenter</label>
-                        <select class="form-control selectSection" style="width: 100px" id="rightComponents" name="rightComponents" size="5" multiple asp-items="@(new SelectList(@ViewBag.AllComponents, "ComponentId", "ComponentNumber"));"></select>
+                        <select class="form-control selectSection" style="width: 100px" id="leftComponents" name="leftComponents" size="5" multiple asp-items="@(new SelectList(@ViewBag.ComponentsOfType, "ComponentId", "ComponentNumber"));"></select>
                     </div>
                 </section>
             </div>
@@ -122,17 +114,6 @@
         $("#rightValues").append(selectedItem);
     });
 
-    $("#btnLeftComponent").click(function () {
-        var selectedItem = $("#rightComponents option:selected");
-
-        $("#leftComponents").append(selectedItem);
-    });
-
-    $("#btnRightComponent").click(function () {
-        var selectedItem = $("#leftComponents option:selected");
-        $("#rightComponents").append(selectedItem);
-    });
-
     $("#submitForm").submit(function (eventObj) {
         var categoryArr = [];
         var componentArray = [];
@@ -140,18 +121,9 @@
             categoryArr.push($(this).val());
         });
 
-        $("#leftComponents option").each(function () {
-            componentArray.push($(this).val());
-        });
-
         $('<input />').attr('type', 'hidden')
             .attr('name', "categories")
             .attr('value', categoryArr)
-            .appendTo('#submitForm');
-
-        $('<input />').attr('type', 'hidden')
-            .attr('name', "components")
-            .attr('value', componentArray)
             .appendTo('#submitForm');
         return true;
     });
