@@ -6,12 +6,15 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ITWEBExercise5.Models;
+using ITWEBExercise5.Data.Repository;
 
 namespace ITWEBExercise5.Controllers
 {
     public class ListComponentTypesController : Controller
     {
         private readonly EmbeddedStockContext _context;
+        private readonly ICategoryRepository _categoryRepository;
+        private readonly IComponentTypeRepository _componenentTypeRepository;
 
         public ListComponentTypesController(EmbeddedStockContext context)
         {
