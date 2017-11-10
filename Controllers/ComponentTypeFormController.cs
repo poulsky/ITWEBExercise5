@@ -31,6 +31,25 @@ namespace ITWEBExercise5.Controllers
             return View(await _context.ComponentTypes.ToListAsync());
         }
 
+
+        public async Task<IActionResult> TypeList(int id, long typeId = 0)
+        {
+            
+            ViewBag.CategoryId = id;
+            ViewBag.SelectedTypeId = (int)typeId;
+            return View(await _context.CategoryComponentTypes
+                .Where(cc => cc.CategoryId == id)
+                .Select(cc => cc.ComponentType)
+                .ToListAsync());
+        }
+
+        
+
+        public IActionResult ComponentList(long id)
+        {
+            return ViewComponent("Result", new {typeId = (int)id});
+        }
+
         // GET: ComponentTypeForm/Details/5
         public async Task<IActionResult> Details(long? id)
         {
@@ -133,8 +152,12 @@ namespace ITWEBExercise5.Controllers
                 try
                 {
                     var selectedValues = formCollection["categories"].ToString();
-                    var splitSelected = selectedValues.Split(",");
-
+                    string[] splitSelected = new string[0];
+                    if (!string.IsNullOrEmpty(selectedValues))
+                    {
+                        splitSelected = selectedValues.Split(",");
+                    }
+                   
                     var categoriesOfType = await _context.CategoryComponentTypes
                         .Where(cc => cc.ComponentTypeId == id)
                         .Select(cc => cc.Category)

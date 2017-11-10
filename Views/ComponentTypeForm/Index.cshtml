@@ -75,7 +75,8 @@
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ComponentTypeId">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.ComponentTypeId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ComponentTypeId">Delete</a>
+                <a asp-action="Delete" asp-route-id="@item.ComponentTypeId">Delete</a> |
+                <a asp-action="TypeList" asp-controller="ComponentTypeForm" asp-route-typeId="@item.ComponentTypeId">Show Component list</a>
             </td>
         </tr>
 }

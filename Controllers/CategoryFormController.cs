@@ -134,7 +134,12 @@ namespace ITWEBExercise5.Controllers
                 try
                 {
                     var selectedValues = formCollection["types"].ToString();
-                    var splitSelected = selectedValues.Split(",");
+                    string[] splitSelected = new string[0];
+                    if (!string.IsNullOrEmpty(selectedValues))
+                    {
+                        splitSelected = selectedValues.Split(",");
+                    }
+                    
                     var allTypes = _componentTypeRepository.GetAll().ToList();
 
                     var typesOfCategory = await _context.CategoryComponentTypes

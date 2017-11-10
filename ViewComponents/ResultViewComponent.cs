@@ -25,6 +25,10 @@ namespace ITWEBExercise5.ViewComponents
         public async Task<IViewComponentResult> InvokeAsync(int typeId)
         {
             var components = await GetComponentsAsync(typeId);
+            if (components == null)
+            {
+                return View();
+            }
             return View(components);
         }
 
@@ -55,7 +59,8 @@ namespace ITWEBExercise5.ViewComponents
             //    return components.ToAsyncEnumerable().ToList();
             //}
             // No search - get all components
-            return _componentDb.GetAll().ToAsyncEnumerable().ToList();
+            //return _componentDb.GetAll().ToAsyncEnumerable().ToList();
+            return new List<Component>().ToAsyncEnumerable().ToList();
         }
     }
 }
