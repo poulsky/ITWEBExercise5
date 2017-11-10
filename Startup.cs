@@ -27,11 +27,12 @@ namespace ITWEBExercise5
             services.AddTransient<IComponentRepository, ComponentRepository>();
             services.AddTransient<IComponentTypeRepository, ComponentTypeRepository>();
             services.AddTransient<ICategoryRepository, CategoryRepository>();
-            services.AddDbContext<EmbeddedStockContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString(
-                        "Development")));
+            // services.AddDbContext<EmbeddedStockContext>(options =>
+            //     options.UseSqlServer(
+            //         Configuration.GetConnectionString(
+            //             "Development")));
             //services.AddDbContext<EmbeddedStockContext>(options => options.UseSqlite("Data Source=TestES.db"));
+            services.AddDbContext<EmbeddedStockContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Production")));
             services.AddMvc();
         }
 
